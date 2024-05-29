@@ -1,0 +1,26 @@
+import sqlite3
+
+conn = sqlite3.connect('data.db')
+c = conn.cursor()
+
+# Create table for users
+c.execute('''CREATE TABLE IF NOT EXISTS users (
+    user_id INTEGER PRIMARY KEY,
+    username TEXT NOT NULL,
+    level INTEGER DEFAULT 1,
+    experience INTEGER DEFAULT 0,
+    currency INTEGER DEFAULT 0
+)''')
+
+# Create table for Pokemon
+c.execute('''CREATE TABLE IF NOT EXISTS pokemon (
+    pokemon_id INTEGER PRIMARY KEY,
+    user_id INTEGER,
+    name TEXT NOT NULL,
+    level INTEGER DEFAULT 1,
+    exp INTEGER DEFAULT 0,
+    FOREIGN KEY (user_id) REFERENCES users (user_id)
+)''')
+
+conn.commit()
+conn.close()
